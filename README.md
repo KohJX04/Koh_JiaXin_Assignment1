@@ -76,6 +76,30 @@
     });
   },
 
+### RemoveGuest
+      removeGuest(guestParam) {
+    const guestEntry = guests.find(g => g.guestID === guestParam.guestID);  --> check if guest is already inside the database 
+
+    if (guestEntry) {       --> if the guest is found insinde 
+      const updatedGuestList = guests.filter(
+        g => g.guestID !== guestParam.guestID
+      ); --> create a new guestlist without the the guest
+      guests.length = 0; --> clear original array
+      guests.push(...updatedGuestList); --> replace with filtered list 
+
+      console.log(
+        `Guest with ID ${guestParam.guestID} has been removed from records.`
+      );
+      console.log("Updated guest list:");
+      guests.forEach(g => {
+        console.log(`Guest: ${g.name}, ID: ${g.guestID}`);
+      });
+    } else {
+      console.log(`Guest with ID ${guestParam.guestID} cannot be found.`);
+    }
+  },
+
+
 ### CheckinGuest
     Checks in a guest to a chosen room (if available).
 
@@ -84,25 +108,27 @@
     const room = findRoom(booking.roomNumber);
 
     if (!guest) {
-      console.log(`Guest with ID ${booking.guestID} not found.`);
+      console.log(`Guest with ID ${booking.guestID} not found.`);   --> check guest is valid 
       return;
     }
 
     if (!room) {
-      console.log(`Room ${booking.roomNumber} does not exist.`);
+      console.log(`Room ${booking.roomNumber} does not exist.`); --> check if room is valid
       return;
     }
 
     if (room.status !== "available") {
       console.log(
-        `Room ${room.roomNumber} is not available. Current status: ${room.status}`
+        `Room ${room.roomNumber} is not available. Current status: ${room.status}` --> check status
       );
       return;
     }
 
     room.status = "occupied";
-    room.currentGuestID = guest.guestID;
-    room.nightsBooked = booking.nights;
+    room.currentGuestID = guest.guestID; --> this will update the Null fields
+    room.nightsBooked = booking.nights;  --> this is temporarily so in the room field actually i dont need to add iniside 
+
+
 
     console.log(
       `Check-in successful: ${guest.name} to Room ${room.roomNumber} for ${booking.nights} night(s).`
@@ -141,15 +167,74 @@
 
     // After check-out: mark room for cleaning
     room.status = "cleaning";
-    room.currentGuestID = null;
-    delete room.nightsBooked;
+    room.currentGuestID = null; --> return the number of customers back to Null
+    delete room.nightsBooked; --> remove this field because it is temporarily only
 
     console.log(`Room ${room.roomNumber} set to 'cleaning' status.`);
   },
-  
+
 
 ### AssignHouseKeeping
     Assigns a housekeeping staff to clean a room.
+
+    assignHousekeeping(taskInfo) {
+    const room = findRoom(taskInfo.roomNumber);
+    const staffMember = staff.find(s => s.staffID === taskInfo.staffID);
+
+    if (!room) {
+      console.log(`Room ${taskInfo.roomNumber} does not exist.`);
+      return;
+    }
+
+    if (!staffMember || staffMember.role !== "Housekeeping") {
+      console.log(
+        `Staff with ID ${taskInfo.staffID} is not a housekeeping staff or does not exist.`
+      );
+      return;
+    }
+
+    housekeepingTasks.push({
+      roomNumber: room.roomNumber,
+      staffID: staffMember.staffID,
+      status: "pending"
+    });
+
+    console.log(
+      `Assigned ${staffMember.name} to clean Room ${room.roomNumber}.`
+    );
+  },
+
+### CompleteHouseKeeping
+    completeHousekeeping(completeInfo) {
+    const task = housekeepingTasks.find(
+      t =>
+        t.roomNumber === completeInfo.roomNumber &&
+        t.staffID === completeInfo.staffID &&
+        t.status === "pending"
+    );
+    const room = findRoom(completeInfo.roomNumber);
+
+    if (!task) {
+      console.log(
+        `No pending housekeeping task found for Room ${completeInfo.roomNumber} and Staff ${completeInfo.staffID}.`
+      );
+      return;
+    }
+
+    task.status = "completed";
+    if (room && room.status === "cleaning") {
+      room.status = "available";
+      console.log(
+        `Housekeeping completed for Room ${room.roomNumber}. Room is now available.`
+      );
+    } else {
+      console.log(
+        `Task completed, but Room ${completeInfo.roomNumber} is not in 'cleaning' status.`
+      );
+    }
+  },
+
+
 
 ### PrintHotelSummary
     Displays a hotel dashboard:
