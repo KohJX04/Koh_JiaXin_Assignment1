@@ -242,6 +242,36 @@
         All guests
         All housekeeping tasks
 
+        
+    printHotelSummary() {
+        console.log("===== HOTEL SUMMARY =====");
+        console.log("Rooms:");
+        rooms.forEach(r => {
+        console.log(
+            `Room ${r.roomNumber} (${r.type}) - Status: ${r.status}, Rate: $${r.ratePerNight}, GuestID: ${r.currentGuestID}`
+        );
+        });
+
+        console.log("\nGuests:");
+        guests.forEach(g => {
+        console.log(`Guest: ${g.name}, ID: ${g.guestID}, Phone: ${g.phone}`);
+        });
+
+        console.log("\nHousekeeping Tasks:");
+        if (housekeepingTasks.length === 0) {
+        console.log("No housekeeping tasks at the moment.");
+        } else {
+        housekeepingTasks.forEach(t => {
+            console.log(
+            `Room ${t.roomNumber}, StaffID: ${t.staffID}, Status: ${t.status}`
+            );
+        });
+        }
+        console.log("=========================\n");
+    }
+
+
+
 
 ## How to install the assigment 
 ### Clone the assigment and Local Set up
