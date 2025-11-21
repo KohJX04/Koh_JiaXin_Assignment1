@@ -17,20 +17,21 @@
             ratingPerNight: <float> $$
             currentGuestID: <null> by default it should be empty  
         },
-        {
-            roomNumber: <int>,
-            type: <string> "Single","Double","Suite"
-            status: <String> "Available","Occuptied"
-            ratingPerNight: <float> $$
-            currentGuestID: <null> by default it should be empty  
-        },
+        {},
         ... nth rooms 
     ]
 ### staff
     staff = [
-        
+        {
+            staffID: <Int>
+            name: <String>
+            role: <String> "Housekeeping" it is the only relevant role
+        },
+        {},
+        ....nth employee
     ]
 ### guest
+
 ### houseKeepingTask
 
 ## Function
