@@ -8,5 +8,14 @@ You can press **Ctrl+Shift+V** in this file in Visual Studio Code to see a live 
 
 For some tips in formatting text in readme file, refer to https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
 
+# Assigment 1 Overview 
+This project is a Node.js module that simulates a small hotel management system. It allows staff to manage rooms, guests, check-ins, check-outs, and housekeeping tasks.
+
+The purpose of this assignment is to design a backend module inspired by an existing web application — in this case, a hotel booking / hotel management system.
+
+This module is built without a real database; instead, arrays are used to store dummy data, as required by the assignment.
+
+
+
 # References
 Provide the references that you have used to support your assignment. 
