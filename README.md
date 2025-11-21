@@ -278,7 +278,7 @@
     1.Go to the the NYP github and choose the file you like and open the file.
     2.Once the site is open, click on the green '<>code' button and download it as a zip file or open it with 'Open with GirHub Desktop'
     3.Once the file has been installed into your own local computer, open the CMD terminal and paste the project's parent folder path. Example : "C:\Users\*********\github\Koh_JiaXin_Assignment1"
-    by the way: node.js need to be downloaded before hand. HAHAHHAHAHA
+    by the way: node.js need to be downloaded before hand. 
     4.Once the CMD termianl is in the correct file path paste this code "npm install" --> this will install package.json file and all the node dependencies needed 
     5.Paste the code "npm install -g nodemon" this is to install the nodemon --> the auto version
     6.Paste the nodemon app.js --> this is the file you need to auto update
